@@ -34,23 +34,17 @@ cd [SPEECHTOTEXT]
 Install Dependencies:
 
 npm install
-
-# OR
-
-yarn install
+Note: The core dependency is react-speech-recognition.
+npm install --save react-speech-recognition
 
 Note: The core dependency is react-speech-recognition.
 
 Run the Application:
 Start the development server.
 
-npm start
+npm run dev
 
-# OR
-
-yarn start
-
-The application will typically open automatically at http://localhost:3000.
+The application will typically open automatically at http://localhost:5173.
 
 Required Permissions
 
@@ -73,9 +67,9 @@ Resets the transcript to an empty state.
 Resets the transcript to an empty state.
 
 "I would like to order [item]"
-
+for eg Biryani
 Updates the message box with the full order: "Your order is for: [item]".
-
+for eg Biryani it replyies
 "Hello" or "Hi"
 
 Updates the message box with a friendly greeting.
