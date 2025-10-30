@@ -12,9 +12,16 @@ const App = () => {
       callback: (food) => setMessage(`Your order is for: ${food}`),
     },
     {
+      command: "Myself *",
+      callback: (name) => setMessage(`welcome ${name}`),
+    },
+    {
       command: "Hey Jarvis",
       callback: () => setMessage(`Yes, how can I help you?`),
-      // callback: ({ resetTranscript }) => resetTranscript(),
+    },
+    {
+      command: "are you there Jarvis",
+      callback: () => setMessage(`Yes, I am here!`),
     },
     {
       command: ["Hello", "Hi"],
@@ -26,8 +33,18 @@ const App = () => {
       callback: ({ resetTranscript }) => resetTranscript(),
     },
     {
+      command: "Stop listening",
+      callback: () =>
+        setMessage(
+          `You Are Offline Now, Please Click on Start Listening-To Continue`
+        ),
+    },
+    {
+      command: "stop listening",
+      callback: () => SpeechRecognition.stopListening(),
+    },
+    {
       command: "Hey Jarvis",
-      // callback: () => setMessage(`Yes, how can I help you?`),
       callback: ({ resetTranscript }) => resetTranscript(),
     },
   ];
@@ -46,24 +63,23 @@ const App = () => {
   if (!browserSupportsSpeechRecognition) {
     return null;
   }
-  // if (!isMicrophoneAvailable) {
-  //   return (
-  //     <div>Microphone is not available. Please check your device settings.</div>
-  //   );
-  // }
-
   useEffect(() => {
-    SpeechRecognition.startListening({ continuous: true, language: "en-IN" });
+    SpeechRecognition.startListening({ continuous: true, language: "kan-IN" });
   }, []);
-
   return (
     <>
       <div className="container">
-        <h2>Speech to Text Converter</h2>
+        <h2>Voice-Trigger-Demo</h2>
         <br />
-        {listening && <p>Microphone: {listening ? "on" : "off"}</p>}
-        <p>A Simple React app to convert your speech to text</p>
-        <h3>{message || "waiting for a  command..."}</h3>
+        {/* ------------------------------------------------------------ */}
+        <div className="microphone">
+          {" "}
+          {listening && <p>Microphone: {listening ? "on" : "off"}</p>}
+        </div>
+        <p>A Simple React app To Voice Trigger</p>
+        <div className="message-container">
+          <h3>{message || "waiting for a  command..."}</h3>
+        </div>
         {isMicrophoneAvailable ? (
           <div className="main-content">
             <p>{transcript}</p>
@@ -74,7 +90,14 @@ const App = () => {
         {/* ---------------------------------------------------------- */}
         <div className="btn-style">
           <button onClick={resetTranscript}>Reset</button>
-          <button onClick={startListening}>Start Listening</button>
+          <button
+            onClick={() => {
+              startListening();
+              setMessage("Youre online now");
+            }}
+          >
+            Start Listening
+          </button>
           <button onClick={SpeechRecognition.stopListening}>
             Stop Listening
           </button>
